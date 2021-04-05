@@ -9,8 +9,11 @@ import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -20,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private CustomAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-
-    private int count = 0; //그냥 일단 실험용
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,21 +38,80 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         //액티비티 메인
-        TextView date = (TextView)findViewById(R.id.date); //캘린더 누른 날짜 받아오기 구현
+        TextView date = (TextView) findViewById(R.id.date); //캘린더 누른 날짜 받아오기 구현
 
-        ImageView add_btn = (ImageView)findViewById(R.id.btn_add);
-        add_btn.setOnClickListener(new View.OnClickListener() {
+        ImageView btn_add = (ImageView) findViewById(R.id.btn_add);
+        btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count++;
 
-                DailyPlan plan = new DailyPlan("plan"+count, false, Integer.toString(count), Integer.toString(count*100000));
+                //edit_box.xml 불러서 다이얼로그 보여주기
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.edit_box, null, false);
+                builder.setView(view);
 
-                //mPlanList.add(0,plan); //처음에 삽입
-                mPlanList.add(plan); //뒤에 삽입
-                mAdapter.notifyDataSetChanged(); //업데이트
+                final TextView dialogTitle = (TextView) view.findViewById(R.id.text_dialog);
+                final EditText editTextPlan = (EditText) view.findViewById(R.id.et_dialog_plan);
+                final EditText editTextOrder = (EditText) view.findViewById(R.id.et_dialog_order);
+                final Button btn_add_dialog = (Button) view.findViewById(R.id.btn_dialog_add);
+
+                final AlertDialog dialog = builder.create();
+
+                //다이얼로그의 추가 버튼을 누르면
+                btn_add_dialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //입력 내용 가져오기
+                        String plan = editTextPlan.getText().toString();
+                        String order = editTextOrder.getText().toString();
+
+                        //order에 따라 돈 구현하기
+                        int intOrder = Integer.parseInt(order);
+                        int possibleOrder = mPlanList.size() + 1;
+                        int intIncome = 0;
+                        //intIncome = 100000/possibleOrder*(possibleOrder-(intOrder-1));
+
+                        switch (intOrder) {
+                            case 1:
+                                intIncome = 100000;
+                                break;
+                            case 2:
+                                intIncome = 800000;
+                                break;
+                            case 3:
+                                intIncome = 500000;
+                                break;
+                            case 4:
+                                intIncome = 250000;
+                                break;
+                            default:
+                                Toast.makeText(MainActivity.this, "최대입니다.", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+
+
+                        //order가 size+1까지만 가능하게 ! 가능하면 중복도 없게!
+
+
+                        //ArrayList에 넣기
+                        DailyPlan planItem = new DailyPlan(plan, false, order, Integer.toString(intIncome));
+                        mPlanList.add(planItem); //뒤에 삽입
+
+                        //추가될 때마다 기존 수입들도 바꾸기
+                        /*for(int i=0; i<intOrder; i++) {
+                            DailyPlan currentItem = mPlanList.get(i);
+                            int currentOrder = Integer.parseInt(currentItem.getOrder());
+                            currentItem.setIncome(Integer.toString(100000/mPlanList.size()*(mPlanList.size()-(currentOrder-1))));
+                        }*/
+
+                        //어댑터에게 알리기
+                        mAdapter.notifyDataSetChanged(); //업데이트
+
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
             }
         });
-
     }
 }
