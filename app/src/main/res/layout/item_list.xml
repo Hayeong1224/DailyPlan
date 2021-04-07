@@ -15,55 +15,65 @@
             android:id="@+id/plan_it"
             android:layout_width="180dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
             android:text="하루 일정 입력하기"
             android:textSize="20sp"
+            android:layout_marginLeft="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </TextView>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6"></TextView>
 
         <CheckBox
             android:id="@+id/cb_it"
             android:layout_width="30dp"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="12dp"
-            android:gravity="center"
+            android:layout_marginStart="4dp"
+            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/plan_it"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
-        </CheckBox>
+            app:layout_constraintVertical_bias="0.0"></CheckBox>
 
         <TextView
             android:id="@+id/order_it"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="4dp"
             android:gravity="center"
             android:text="10"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/income_it"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.523">
-        </TextView>
+            app:layout_constraintVertical_bias="0.6"></TextView>
 
         <TextView
             android:id="@+id/income_it"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="48dp"
+            android:layout_gravity="center_vertical"
             android:gravity="center"
             android:text="100,000"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.523">
-        </TextView>
+            app:layout_constraintEnd_toStartOf="@+id/edit_btn_it"
+            tools:layout_editor_absoluteX="245dp"></TextView>
+
+        <ImageButton
+            android:id="@+id/edit_btn_it"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="4dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/btn_round"
+            android:src="@drawable/btn_edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/remove_btn_it"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageView
             android:id="@+id/remove_btn_it"
@@ -74,8 +84,10 @@
             android:src="@drawable/btn_remove"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.943"
             app:layout_constraintStart_toEndOf="@+id/income_it"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

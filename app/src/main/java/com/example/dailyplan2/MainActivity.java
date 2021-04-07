@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new CustomAdapter(mPlanList);
+        //mAdapter = new CustomAdapter(mPlanList);
+        mAdapter = new CustomAdapter(this,mPlanList);
         mRecyclerView.setAdapter(mAdapter);
 
         //액티비티 메인
@@ -69,28 +70,10 @@ public class MainActivity extends AppCompatActivity {
                         int intOrder = Integer.parseInt(order);
                         int possibleOrder = mPlanList.size() + 1;
                         int intIncome = 0;
-                        //intIncome = 100000/possibleOrder*(possibleOrder-(intOrder-1));
-
-                        switch (intOrder) {
-                            case 1:
-                                intIncome = 100000;
-                                break;
-                            case 2:
-                                intIncome = 800000;
-                                break;
-                            case 3:
-                                intIncome = 500000;
-                                break;
-                            case 4:
-                                intIncome = 250000;
-                                break;
-                            default:
-                                Toast.makeText(MainActivity.this, "최대입니다.", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-
+                        intIncome = 100000/possibleOrder*(possibleOrder-(intOrder-1));
 
                         //order가 size+1까지만 가능하게 ! 가능하면 중복도 없게!
+                        /*for(int i=0; i < intOrder; )*/
 
 
                         //ArrayList에 넣기
@@ -98,11 +81,11 @@ public class MainActivity extends AppCompatActivity {
                         mPlanList.add(planItem); //뒤에 삽입
 
                         //추가될 때마다 기존 수입들도 바꾸기
-                        /*for(int i=0; i<intOrder; i++) {
+                        for(int i=0; i<mPlanList.size(); i++) {
                             DailyPlan currentItem = mPlanList.get(i);
                             int currentOrder = Integer.parseInt(currentItem.getOrder());
                             currentItem.setIncome(Integer.toString(100000/mPlanList.size()*(mPlanList.size()-(currentOrder-1))));
-                        }*/
+                        }
 
                         //어댑터에게 알리기
                         mAdapter.notifyDataSetChanged(); //업데이트
@@ -113,5 +96,10 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+    }
+
+    //추가 버튼 onClick 메소드로 구현해보기
+    public void store(View view){
+
     }
 }
